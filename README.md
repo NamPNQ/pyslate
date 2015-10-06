@@ -1,5 +1,5 @@
 # pyslate
-Another implement slate in python, but it simple than.
+Another implement [Slate](https://github.com/tripit/slate) in python, but it simple than.
 
 ## How to use
 
