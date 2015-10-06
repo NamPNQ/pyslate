@@ -3,3 +3,4 @@ pyyaml
 markdown2
 pygments
 misaka
+unidecode

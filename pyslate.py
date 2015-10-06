@@ -5,30 +5,24 @@ import codecs
 import argparse
 import jinja2
 import misaka as m
+import unidecode
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
 from flask import escape
 
 
-def sluggify(s):
-    was = ''
-    ret = ''
-    for c in s:
-        if re.match(r'\w', c):
-            ret += c
-            was = ''
-        elif was == '':
-            ret += '-'
-            was = '-'
-    return ret.strip('-').lower()
+RE_NON_WORD = re.compile(r'\W+')
+def slugify(s):
+    s = unidecode.unidecode(s).lower()
+    return RE_NON_WORD.sub('-', s)
 
 
 # Create a custom renderer
 class PySlateRenderer(m.HtmlRenderer, m.SmartyPants):
     def header(self, header, n):
         header = header.strip()
-        slug = sluggify(header)
+        slug = slugify(header)
         return "\n<h{n} id=\"{slug}\">{header}</h{n}>\n".format(**locals())
 
     def block_code(self, text, lang):
